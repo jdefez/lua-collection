@@ -112,6 +112,16 @@ function Collection:each(fn)
     return self
 end
 
+---@param fn function(value: any, key: any): boolean
+---@return self
+function Collection:map(fn)
+    local new_collection = Collection:new()
+    for key, value in ipairs(self.table) do
+        new_collection:push(fn(value, key))
+    end
+    return new_collection
+end
+
 ---@param fn function(value: any, key: any)
 ---@return self
 function Collection:filter(fn)

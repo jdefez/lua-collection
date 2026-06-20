@@ -7,7 +7,7 @@ A Lua utility library for Neovim providing a fluent, chainable API for working w
 Requires Neovim 0.11+ (uses the built-in `vim.pack` API).
 
 ```lua
-vim.pack.add("jdefez/lua-collection")
+vim.pack.add("https://github.com/jdefez/lua-collection")
 ```
 
 ## Usage
