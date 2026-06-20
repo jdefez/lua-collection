@@ -61,6 +61,17 @@ describe("collection module tests", function()
         assert.are.equal(3, loops)
     end)
 
+    it("map", function()
+        local animals = collect({ 'dog', 'cat', 'mouse', 'bird' })
+        local animals_map = animals:map(function(value)
+            return value .. 'y'
+        end)
+
+        assert.are.equal(4, animals_map:count())
+        assert.are.equal('dogy', animals_map:first())
+        assert.are.equal('birdy', animals_map:last())
+    end)
+
     it("filter", function()
         local animals = collect({ 'dog', 'cat', 'mouse', 'bird' })
         local dogs = animals:filter(function(value)
