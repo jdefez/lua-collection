@@ -1,6 +1,7 @@
 local Collection = {}
 Collection.__index = Collection
 
+---Create a new collection
 ---@class Collection
 function Collection:new(tbl)
     local obj = setmetatable({}, self)
@@ -8,10 +9,16 @@ function Collection:new(tbl)
     return obj
 end
 
+---Create a new collection from a table
+---@param tbl table
+---@return Collection
 Collection.collect = function(tbl)
     return Collection:new(tbl)
 end
 
+---Check if the table is a list
+---@param t table
+---@return boolean
 function Collection:isArray(t)
     local i = 0
     for _ in pairs(t) do
@@ -21,6 +28,7 @@ function Collection:isArray(t)
     return true
 end
 
+---Push items to the collection
 ---@return self
 function Collection:push(...)
     local items = { ... }
@@ -30,6 +38,7 @@ function Collection:push(...)
     return self
 end
 
+---Put a value in the collection
 ---@param key string|number
 ---@param value any
 ---@return self
@@ -38,12 +47,14 @@ function Collection:put(key, value)
     return self
 end
 
+---Get a value from the collection
 ---@param key string|number
 ---@return any
 function Collection:get(key)
     return self.table[key]
 end
 
+---Get the keys of the collection as an array
 ---@return table
 function Collection:keys()
     local keys = {}
@@ -53,6 +64,7 @@ function Collection:keys()
     return keys
 end
 
+---Get the values of the collection as an array
 ---@return table
 function Collection:values()
     local values = {}
@@ -70,6 +82,7 @@ function Collection:values()
     return values
 end
 
+---Merge the collection with another collection
 ---@param collection Collection
 ---@return self
 function Collection:merge(collection)
@@ -83,26 +96,31 @@ function Collection:merge(collection)
     return self
 end
 
+---Remove and return the first item of the collection
 ---@return any
 function Collection:shift()
     return table.remove(self.table, 1)
 end
 
+---Remove and return the last item of the collection
 ---@return any
 function Collection:pop()
     return table.remove(self.table, #self.table)
 end
 
+---Get the first item of the collection
 ---@return any
 function Collection:first()
     return self.table[1]
 end
 
+---Get the last item of the collection
 ---@return any
 function Collection:last()
     return self.table[#self.table]
 end
 
+---Iterate over the collection items
 ---@param fn function(value: any, key: any)
 ---@return self
 function Collection:each(fn)
@@ -112,6 +130,7 @@ function Collection:each(fn)
     return self
 end
 
+---Map the collection items and return a new collection
 ---@param fn function(value: any, key: any): boolean
 ---@return self
 function Collection:map(fn)
@@ -122,6 +141,7 @@ function Collection:map(fn)
     return new_collection
 end
 
+---Filter the collection items and return a new collection
 ---@param fn function(value: any, key: any)
 ---@return self
 function Collection:filter(fn)
@@ -134,6 +154,8 @@ function Collection:filter(fn)
     return new_collection
 end
 
+---Get the number of items in the collection
+---@return number
 function Collection:count()
     if self:isArray(self.table) then
         return #self.table
@@ -142,14 +164,19 @@ function Collection:count()
     return Collection:new(self:values()):count()
 end
 
+---Check if the collection is empty
+---@return boolean
 function Collection:is_empty()
     return self:count() == 0
 end
 
+---Check if the collection is not empty
+---@return boolean
 function Collection:is_not_empty()
     return self:count() > 0
 end
 
+---Check if the collection contains a value
 ---@param key string|function
 ---@param value any
 ---@return boolean
@@ -168,6 +195,7 @@ function Collection:contains(key, value)
     return false
 end
 
+---Check if the collection contains a least one item using a predicate function
 ---@param fn function(value: any, key: any)
 ---@return boolean
 function Collection:some(fn)
@@ -179,6 +207,7 @@ function Collection:some(fn)
     return false
 end
 
+---Check every item in the collection using a predicate function
 ---@param fn function(value: any, key: any)
 ---@return boolean
 function Collection:every(fn)
@@ -190,6 +219,7 @@ function Collection:every(fn)
     return true
 end
 
+---Get the difference between the collection and another collection
 ---@param collection Collection | table
 ---@return Collection
 function Collection:diff(collection)
@@ -208,6 +238,7 @@ function Collection:diff(collection)
     return found
 end
 
+---Get the intersection between the collection and another collection
 ---@param collection Collection | table
 ---@return Collection
 function Collection:intersect(collection)
